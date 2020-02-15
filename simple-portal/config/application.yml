@@ -1,0 +1,15 @@
+server:
+  port: 30030
+
+spring:
+  application:
+    name: jenkins-portal
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/db_jenkins_portal?serverTimezone=GMT%2b8&characterEncoding=utf8
+    username: root
+    password: qweASD123!@#
+  thymeleaf:
+    cache: true
+
+mybatis-plus:
+  type-enums-package: cn.boommanpro.jenkins.portal.enums
