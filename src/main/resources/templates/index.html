@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>项目部署</title>
+    <style>
+        *{
+            font-size: 16px;
+            box-sizing: content-box;
+        }
+        body{
+            margin:0;
+            min-width: 1040px;
+        }
+
+        h1,h2{
+            background:#287fb8;
+            padding:10px 15px;
+            color:#fff;
+            margin:0;
+            box-shadow: 0 0 2px 0 rgba(0,0,0, .3) inset;
+            height:42px;
+            line-height:42px;
+        }
+
+        h1{
+            text-align: center;
+            margin-bottom: 50px;
+            box-shadow: 0 0 8px 4px rgba(0,0,0, .3) inset;
+            font-size: 24px;
+            padding:15px;
+            min-width: 1040px;
+        }
+
+        .out-wraper{
+            text-align: center;
+            min-width: 1040px;
+        }
+        .wraper{
+            display: inline-block;
+            vertical-align: top;
+            margin-right:2px;
+        }
+        a{
+
+        }
+
+        a, .black-box{
+            display: block;
+            padding:10px 15px;
+            background:#eeeeee;
+            color:#444;
+            text-decoration: none;
+            box-shadow: 0 0 1px 0 rgba(0,0,0, .3) inset;
+            width:310px;
+            text-align: left;
+            height:42px;
+            line-height:42px;
+        }
+        a:hover{
+            transform: translateY(-4px);
+            background: #f6f6f6;
+            box-shadow:0 0 4px 4px rgba(0,0,0, .3);
+        }
+
+    </style>
+</head>
+<body>
+<h1 th:text="${pageStyle.title}">项目部署</h1>
+<div class="out-wraper">
+    <div class="wraper" th:each="category : ${pageView} ">
+        <h2 th:text="${category.name}">一键部署</h2>
+        <a th:each="viewData: ${category.viewDataList} " th:text="${viewData.name}" th:if="${viewData.type.name()} == 'LINK'" th:href="${viewData.link}" target="_blank">前端 peacock</a>
+        <a th:each="viewData: ${category.viewDataList} " th:text="${viewData.name}" th:if="${viewData.type.name()} == 'JENKINS'" href="#" th:onclick="|doDeploy('/jenkins/${viewData.id}')|">前端 peacock</a>
+        <div class="black-box" th:each="i:${#numbers.sequence(1,pageStyle.componentLength-category.viewDataList.size())}"></div>
+    </div>
+
+</div>
+</body>
+<footer th:utext="${pageStyle.footer}">
+底部
+</footer>
+
+<script src="js/jquery-3.4.1.min.js"></script>
+<script>
+    function doDeploy(link){
+        $.ajax({
+            type: 'get',
+            url: link,
+            //这个是后台接受的参数
+            jsonp: "jsonpCallback",
+            success: function (res) {
+                alert("发送部署请求成功,请稍等,或等待Jenkins在群里通知")
+            },
+            error (err) {
+                alert("发送部署请求失败,请联系管理员")
+            }
+        })
+    }
+
+</script>
+
+
+</html>
